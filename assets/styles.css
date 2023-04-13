@@ -1,6 +1,8 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 h1 {
@@ -20,7 +22,7 @@ h2 {
 }
 
 #forecast h2 {
-    margin-right: 150px;
+    margin-right: 50px;
 }
 
 #city-search {
@@ -30,13 +32,6 @@ h2 {
 
 hr {
     margin-left: 10px;
-}
-
-#current-forecast .card {
-    padding: 10px;
-    margin-left: 10px;
-    margin-right: 150px;
-    border: 2px solid black;
 }
 
 #fivedayforecast .card {

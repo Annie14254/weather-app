@@ -10,7 +10,6 @@ var futureForecastArray = []
 
 searchButton.addEventListener("click", function(e){
     e.preventDefault;
-    currentForecastDiv.innerHTML = ""
     futureForecastDiv.innerHTML = ""
     getAPI();
 })
@@ -20,6 +19,7 @@ function getAPI(){
 
     var cityname = cityInput.value;
 
+    // pulls data from API based on city name
     var geocodeURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityname}&appid=b2ee8d56fc475c850f7278f3bba52805`;
 
     fetch(geocodeURL)
@@ -27,9 +27,11 @@ function getAPI(){
             return response.json();
         })
         .then (function (data){
+            // converts city name to latitude and longitude
             var lat = data[0].lat
             var lon = data[0].lon
 
+            // use lat and lon to get usable data from API
             var requestURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=b2ee8d56fc475c850f7278f3bba52805&units=imperial`;
 
 
@@ -40,6 +42,8 @@ function getAPI(){
 
                 .then (function(data){
 
+                    // pushes 5 day forecast to array
+                    futureForecastArray = []
                     for( let i=0; i<40; i=i+8 ){
                         futureForecastArray.push(data.list[i])
                     }
@@ -47,14 +51,16 @@ function getAPI(){
                     generateContent();
                 })
 
-
+                // pushes latitude and longitude to local storage under city name as key
                 var latlonArr = []
                 latlonArr.push(lat, lon)
                 localStorage.setItem(cityname, JSON.stringify(latlonArr))
 
+                // pushes city name to array
                 var citynameArr = []
                 citynameArr.push(cityname)
 
+                // uses array to create buttons
                 for (i = 0; i < citynameArr.length; i++){
                     var searchHistoryBtn = document.createElement("button")
                     searchHistoryBtn.textContent = citynameArr[i]
@@ -64,16 +70,35 @@ function getAPI(){
 
                 searchHistoryBtn.addEventListener("click", function(e){
                     e.preventDefault;
-                    console.log("click")
-                })
-                
-                //for(var i = 0; i < data.length; i++){
+                    futureForecastDiv.innerHTML = ""
 
-                // // creates a card showing the current weather for a given location
-                // var currentForecast = document.createElement("section");
-                // currentForecast.setAttribute("class", "card")
-                // currentForecastDiv.appendChild(currentForecast)
-            //}
+                    // pulls latitude and longitude from local storage using the button ID as a key
+                    var latlonArr2 = JSON.parse(localStorage.getItem(searchHistoryBtn.id))
+
+                    // sets as new latitude and longitude variables
+                    var lati = latlonArr2[0]
+                    var long = latlonArr2[1]
+
+                    // do another request from the open weather API, using new variable names to prevent overlap
+                    var rerequestUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lati}&lon=${long}&appid=b2ee8d56fc475c850f7278f3bba52805&units=imperial`; 
+
+                    // rerun the same process as above but with the new variables from local storage
+                    fetch(rerequestUrl)
+                        .then(function(response) {
+                            return response.json();
+                        })
+
+                        .then (function(data){
+
+                            // pushes 5 day forecast to array
+                            futureForecastArray = []
+                            for( let i=0; i<40; i=i+8 ){
+                                futureForecastArray.push(data.list[i])
+                            }
+                            console.log(futureForecastArray)
+                            generateContent();
+                    })
+                })
         })
 }
 
@@ -105,6 +130,8 @@ function generateContent(){
             var humidityForecast = document.createElement("div")
             humidityForecast.textContent = "Humidity: " + futureForecastArray[i].main.humidity + "%"
 
+
+        // append to site
         futureForecastDiv.appendChild(futureForecast);
         futureForecast.appendChild(futurecastDate)
         futureForecast.appendChild(weatherIcon)
