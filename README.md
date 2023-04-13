@@ -10,7 +10,7 @@ N/A
 <img src = "./assets/images/deployedpage.png" alt = "An image of the deployed weather app, with a weather forecast shown for New York"/>
 
 ## Usage
-Access the deployed page at (placeholder). Type a city name into the field on the left side of the page, then click on the "Search" button to bring up the weather data. If you want to access a previous search, click on the button corresponding to the city name underneath the Search button.
+Access the deployed page at https://annie14254.github.io/weather-app/. Type a city name into the field on the left side of the page, then click on the "Search" button to bring up the weather data. If you want to access a previous search, click on the button corresponding to the city name underneath the Search button.
 
 ## Credits
 The Open Weather Map API was used in the creation of this application.
