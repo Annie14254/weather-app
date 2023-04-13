@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather Dashboard</title>
 
     <link
       rel="stylesheet"
@@ -22,8 +22,38 @@
     />
     <link rel = "stylesheet" href = "./assets/styles.css"/>
 </head>
-<body>
-    
+<body class = "row">
+    <header>
+      <h1>Weather Dashboard</h1>
+    </header>
+
+    <aside class = "col-2">
+
+      <h2>Search for City</h2>
+      <input type = "text" placeholder = "City Name" id = "city-search" class = "col-12"/>
+      <button id = "search-weather-btn">Search</button>
+      <hr/>
+
+      <section id = "search-history">
+
+      </section>
+
+    </aside>
+
+    <main class = "col-10" id = "forecast">
+
+      <h2>Weather Forecast</h2>
+
+      <div id ="current-forecast">
+        <section class = "card">
+          example
+        </section>
+      </div>
+
+      <div id = "fivedayforecast" class = "row">
+    </main>
+
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
