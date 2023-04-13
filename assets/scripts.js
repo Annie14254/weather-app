@@ -6,7 +6,7 @@ var cityInput = document.getElementById("city-search")
 var searchHistory = document.getElementById("search-history")
 var currentForecast
 var futureForecast
-var futureForecastArray = [];
+var futureForecastArray = []
 
 searchButton.addEventListener("click", function(e){
     e.preventDefault;
@@ -27,7 +27,6 @@ function getAPI(){
             return response.json();
         })
         .then (function (data){
-            console.log(data);
             var lat = data[0].lat
             var lon = data[0].lon
 
@@ -41,23 +40,21 @@ function getAPI(){
 
                 .then (function(data){
 
-                    for( let i=0; i<48; i=i+8 ){
+                    for( let i=0; i<40; i=i+8 ){
                         futureForecastArray.push(data.list[i])
                     }
-                    
+                    console.log(futureForecastArray)
                     generateContent();
                 })
 
-                // pushes data to local storage with city name as key, lat/lon values
+
                 var latlonArr = []
                 latlonArr.push(lat, lon)
                 localStorage.setItem(cityname, JSON.stringify(latlonArr))
 
-                // creates array of city names for button creation
                 var citynameArr = []
                 citynameArr.push(cityname)
 
-                // creates buttons for search history
                 for (i = 0; i < citynameArr.length; i++){
                     var searchHistoryBtn = document.createElement("button")
                     searchHistoryBtn.textContent = citynameArr[i]
@@ -65,11 +62,9 @@ function getAPI(){
                     searchHistory.appendChild(searchHistoryBtn)
                 }
 
-                // adds event listener
                 searchHistoryBtn.addEventListener("click", function(e){
                     e.preventDefault;
-                    var searchHistoryLocalStorage = JSON.parse(localStorage.getItem(searchHistoryBtn.id))
-                    console.log(searchHistoryLocalStorage)
+                    console.log("click")
                 })
                 
                 //for(var i = 0; i < data.length; i++){
@@ -84,8 +79,8 @@ function getAPI(){
 
 function generateContent(){
     for (var i = 0; i < futureForecastArray.length; i++){
-        futureForecast = document.createElement("section");
-        futureForecast.setAttribute("class", "card col-2");
+            futureForecast = document.createElement("section");
+            futureForecast.setAttribute("class", "card col-2");
 
             //format unix timestamps to dates
             var futurecastDate = document.createElement("h4")
